@@ -151,6 +151,42 @@ public class ShortestPathJava {
     
                     break;
                 }
+                case 3:{
+                    System.out.print("City codes and distance: ");
+                    String code1= filein.next();
+                    String code2= filein.next();
+                    int pos1= Integer.parseInt(cities.get(code1).id)-1;
+                    int pos2= Integer.parseInt(cities.get(code2).id)-1;
+                    int dist= filein.nextInt();
+                    if(hasEdge(nodes.get(pos1),nodes.get(pos2),edges)){
+                        System.out.println("Edge already exists");
+                    }else{
+                        edges.add(new Edge(" ", nodes.get(pos1),nodes.get(pos2),dist));
+                        System.out.println("You have inserted a road from"+
+                                cities.get(code1).name+" to "+
+                                cities.get(code2).name+
+                                " with a distance of "+dist);
+                    }
+                    break;
+                }
+                case 4:{
+                    System.out.print("City codes: ");
+                    String code1= filein.next();
+                    String code2= filein.next();
+                    int pos1= Integer.parseInt(cities.get(code1).id)-1;
+                    int pos2= Integer.parseInt(cities.get(code2).id)-1;
+                    if(hasEdge(nodes.get(pos1),nodes.get(pos2),edges)){
+                        deleteEdge(nodes.get(pos1),nodes.get(pos2),edges);
+                        System.out.println("Road between"+
+                                cities.get(code1).name+" and "+
+                                cities.get(code2).name+" deleted");
+                    }else{
+                        System.out.println("Road between"+
+                                cities.get(code1).name+" and "+
+                                cities.get(code2).name+" doesn't exist");
+                    }
+                    break;
+                }
                 case 0:{
                     CONTINUE=false;
                     break;
@@ -206,6 +242,26 @@ public class ShortestPathJava {
            default: return -1;
        }
        
+    }
+
+    private static boolean hasEdge(Vertex v1, Vertex v2, ArrayList<Edge> edges) {
+        for(int i=0; i<edges.size();i++){
+            if(edges.get(i).start.equals(v1) && edges.get(i).end.equals(v2)){
+                return true;
+            }
+            
+        }
+        return false;
+    }
+
+    private static void deleteEdge(Vertex v1, Vertex v2, ArrayList<Edge> edges) {
+        for(int i=0; i<edges.size();i++){
+            if(edges.get(i).start.equals(v1) && edges.get(i).end.equals(v2)){
+                edges.remove(i);
+            }
+            
+        }
+        
     }
     
 }
