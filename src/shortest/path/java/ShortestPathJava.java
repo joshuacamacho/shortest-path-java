@@ -98,57 +98,114 @@ public class ShortestPathJava {
            edges.add(new Edge(edgeName,
                    nodes.get(Integer.parseInt(stuff[0])-1), 
                    nodes.get(Integer.parseInt(stuff[1])-1), 
-                   Integer.parseInt(stuff[2])));
-           
-//           System.out.print("\n");
-//           System.out.println(stuff.length);
-        
+                   Integer.parseInt(stuff[2]))); 
         }
-        //City test2 = cities.get("AN");
+       
         
     
+      filein.close();
+      filein= new Scanner(System.in);
+      boolean CONTINUE = true;
+      while(CONTINUE){
+            switch (option(filein)){
+                case 1:
+                {
+                    System.out.print("City Code: ");
+                    String code = filein.next();
+                    if(cities.containsKey(code)){
+                        cities.get(code).print();
+                    }else{
+                        System.out.println("Invalid City Code, City not found");
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    System.out.print("City Codes: ");
+                    String code1 = filein.next();
+                    String code2 = filein.next();
+//                    System.out.println("Code 1 =" +code1+ "Code 2 = "+code2);
+                    if(!(cities.containsKey(code1)&&cities.containsKey(code2))){
+                        System.out.println("Code(s) invalid, cities not found: " + (cities.containsKey(code1)?"":code1)
+                        +" "+(cities.containsKey(code2)?"":code2));
+                        break;
+                    }
+                    Graph graph = new Graph(nodes, edges);
+                    DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
+                    
+                    Vertex node2= nodes.get(Integer.parseInt(cities.get(code2).id)-1);
+                    Vertex node1= nodes.get(Integer.parseInt(cities.get(code1).id)-1);
+                    dijkstra.execute(node1);
+                    LinkedList<Vertex> path = dijkstra.getPath(node2);
+                    System.out.print("\nMinimum distance between ");
+                    System.out.print(cities.get(code1).getName());
+                    System.out.print(" and ");
+                    System.out.print(cities.get(code2).getName());
+                    System.out.print(" is "+dijkstra.getShortestDistance(node2));
+                    System.out.print("\nRoute:\n");
+                    for (Vertex v : path) {
+                      System.out.println(v);
+                    }
+                    
+
+    
+                    break;
+                }
+                case 0:{
+                    CONTINUE=false;
+                    break;
+                }
+                default:{
+                    System.out.println("Not an acceptable value. try again");
+                    break;
+                }
+            }
+            
+            
+        }
       
         
-        
-     /*
-        
-        In the vertex and edge structure defined below
-        Vertex	    Edge	Vertex
-        0 SFO	    2704	1 BOS
-        0 SFO	    1846	2 ORD
-        2 ORD	     867	1 BOS
-        2 ORD	     740	3 JFK
-        3 JFK	     187	1 BOS
-        0SFO	    1464	DFW
-        DFW	     802	ORD
-        DFW	    1121	MIA
-        MIA	    1090	JFK
-        MIA	    1258	BOS
-        SFO	     337	LAX
-        LAX	    1235	DFW
-        LAX	    2342	MIA
-        */
+   
     
     // Lets check from location Loc_1 to Loc_10
-    Graph graph = new Graph(nodes, edges);
-    DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
-    dijkstra.execute(nodes.get(3));
-    LinkedList<Vertex> path = dijkstra.getPath(nodes.get(6));
-    
-    
-    System.out.println("Shortest Path FROM JFK to LAX");
-    
-    for (Vertex v : path) {
-      System.out.println(v);
-    }
-    System.out.println("Shortest Distance "+dijkstra.getShortestDistance(nodes.get(6)));    
    
+    
+    
     }
     
-    private static void addLane(String laneId, int sourceLocNo, int destLocNo,
-        int duration,ArrayList<Vertex> nodes,ArrayList<Edge> edges) {
-        Edge lane = new Edge(laneId,nodes.get(sourceLocNo), nodes.get(destLocNo), duration);
-        
-  }
+    
+
+    private static int option(Scanner scan) {
+        System.out.print("\nCommand? ");
+       switch (scan.next()){
+           case "Q":
+           case "q":
+               return 1;
+           case "D":
+           case "d":
+               return 2;
+           case "I":
+           case "i":
+               return 3;
+           case "R":
+           case "r":
+               return 4;
+           case "E":
+           case "e":
+               return 0;
+           case "H":
+           case "h":
+               System.out.print(
+                       "Q Query the city information by entering the city code\n"+
+                       "D Find the minimum distance between two cities\n"+
+                       "I Insert a road by entering two city codes and distance\n"+
+                       "R Remove an existing road by entering two city codes\n"+
+                       "H Display this message\n"+
+                       "E Exit\n");
+               return 6;
+           default: return -1;
+       }
+       
+    }
     
 }
