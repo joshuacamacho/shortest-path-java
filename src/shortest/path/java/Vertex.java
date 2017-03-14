@@ -11,19 +11,19 @@ package shortest.path.java;
  */
 public class Vertex {
   final private String id;
-  final private String name;
+  private City c;
   
   
-  public Vertex(String id, String name) {
+  public Vertex(String id, City city) {
     this.id = id;
-    this.name = name;
+    this.c = city;
   }
   public String getId() {
     return id;
   }
 
   public String getName() {
-    return name;
+    return c.getInfo();
   }
   
   @Override
@@ -53,7 +53,7 @@ public class Vertex {
 
   @Override
   public String toString() {
-    return name;
+    return c.getName();
   }
   
 }
