@@ -187,6 +187,7 @@ public class ShortestPathJava {
                     }
                     break;
                 }
+                case 6:break;
                 case 0:{
                     CONTINUE=false;
                     break;

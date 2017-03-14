@@ -20,12 +20,12 @@ import java.util.Set;
  */
 public class DijkstraAlgorithm {
 
-  private final List<Vertex> nodes;
-  private final List<Edge> edges;
-  private Set<Vertex> settledNodes;
-  private Set<Vertex> unSettledNodes;
-  private Map<Vertex, Vertex> predecessors;
-  private Map<Vertex, Integer> distance;
+  public List<Vertex> nodes;
+  public List<Edge> edges;
+  public Set<Vertex> settledNodes;
+  public Set<Vertex> unSettledNodes;
+  public Map<Vertex, Vertex> predecessors;
+  public Map<Vertex, Integer> distance;
 
   public DijkstraAlgorithm(Graph graph) {
     this.nodes = new ArrayList<Vertex>(graph.getVertexes());
