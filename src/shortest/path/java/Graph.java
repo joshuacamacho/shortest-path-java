@@ -12,16 +12,17 @@ package shortest.path.java;
 import java.util.List;
 
 public class Graph {
-  public List<Vertex> vertexes;
-  public List<Edge> edges;
+    public List<Edge> edges;
+    public List<Vertex> verticies;
+
 
   public Graph(List<Vertex> vertexes, List<Edge> edges) {
-    this.vertexes = vertexes;
+    this.verticies = vertexes;
     this.edges = edges;
   }
 
   public List<Vertex> getVertexes() {
-    return vertexes;
+    return verticies;
   }
 
   public List<Edge> getEdges() {

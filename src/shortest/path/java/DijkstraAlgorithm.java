@@ -22,8 +22,8 @@ public class DijkstraAlgorithm {
 
   public List<Vertex> nodes;
   public List<Edge> edges;
-  public Set<Vertex> settledNodes;
-  public Set<Vertex> unSettledNodes;
+  public Set<Vertex> proccessedNodes;
+  public Set<Vertex> unproccessedNodes;
   public Map<Vertex, Vertex> predecessors;
   public Map<Vertex, Integer> distance;
 
@@ -33,21 +33,21 @@ public class DijkstraAlgorithm {
   }
 
   public void execute(Vertex source) {
-    settledNodes = new HashSet<Vertex>();
-    unSettledNodes = new HashSet<Vertex>();
+    proccessedNodes = new HashSet<Vertex>();
+    unproccessedNodes = new HashSet<Vertex>();
     distance = new HashMap<Vertex, Integer>();
     predecessors = new HashMap<Vertex, Vertex>();
     distance.put(source, 0);
-    unSettledNodes.add(source);
-    while (unSettledNodes.size() > 0) {
-      Vertex node = getMinimum(unSettledNodes);
-      settledNodes.add(node);
-      unSettledNodes.remove(node);
-      findMinimalDistances(node);
+    unproccessedNodes.add(source);
+    while (unproccessedNodes.size() > 0) {
+      Vertex node = getMinimum(unproccessedNodes);
+      proccessedNodes.add(node);
+      unproccessedNodes.remove(node);
+      relax (node);
     }
   }
 
-  private void findMinimalDistances(Vertex node) {
+  private void relax(Vertex node) {
     List<Vertex> adjacentNodes = getNeighbors(node);
     for (Vertex target : adjacentNodes) {
       if (getShortestDistance(target) > getShortestDistance(node)
@@ -55,7 +55,7 @@ public class DijkstraAlgorithm {
         distance.put(target, getShortestDistance(node)
             + getDistance(node, target));
         predecessors.put(target, node);
-        unSettledNodes.add(target);
+        unproccessedNodes.add(target);
       }
     }
 
@@ -97,7 +97,7 @@ public class DijkstraAlgorithm {
   }
 
   private boolean isSettled(Vertex vertex) {
-    return settledNodes.contains(vertex);
+    return proccessedNodes.contains(vertex);
   }
 
   public int getShortestDistance(Vertex destination) {
